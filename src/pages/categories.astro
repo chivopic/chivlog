@@ -18,6 +18,8 @@ const posts = Object.entries(modules).map(([path, mod]) => ({
 
 const grouped = new Map<string, typeof posts>();
 for (const post of posts) {
+  if ((post.categories ?? []).includes('inbox')) continue;
+
   for (const category of post.categories ?? ['uncategorized']) {
     const list = grouped.get(category) ?? [];
     list.push(post);
