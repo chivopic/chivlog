@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+type PostModule = {
+  frontmatter: {
+    title: string;
+    description?: string;
+    date: string | Date;
+    categories?: string[];
+  };
+};
+
+const modules = import.meta.glob('./posts/*.md', { eager: true }) as Record<string, PostModule>;
+const posts = Object.entries(modules)
+  .map(([path, mod]) => ({
+    ...mod.frontmatter,
+    url: path.replace('./posts/', '/posts/').replace(/\.md$/, ''),
+  }))
+  .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout>
+  <h1>chiv's blog</h1>
+
+  <p>👋 Welcome. This is a small corner of the web for things I build, learn, and think about.</p>
+  <p>🛠 AI-native software, developer tools, security, and experiments.</p>
+  <p>🐙 GitHub: <a href="https://github.com/chivopic">chivopic</a></p>
+
+  <h2>Now</h2>
+  <ul>
+    <li>building useful software with AI</li>
+    <li>learning systems, agents, and how modern models work</li>
+    <li>writing notes worth keeping</li>
+  </ul>
+
+  <h2>Writing</h2>
+  <ul class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <div class="meta">{new Date(post.date).toISOString().slice(0, 10)}</div>
+          <a class="post-title" href={post.url}>{post.title}</a>
+          {post.description ? <p class="summary">{post.description}</p> : null}
+        </li>
+      ))
+    }
+  </ul>
+
+  <p><a href="/posts">all posts →</a></p>
+
+  <h2>Elsewhere</h2>
+  <ul>
+    <li><a href="https://github.com/chivopic">GitHub</a></li>
+  </ul>
+</BaseLayout>

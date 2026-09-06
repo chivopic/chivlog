@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "chiv's blog",
+  description = 'Build things · explore deeply · stay curious.',
+} = Astro.props;
+
+const pageTitle = title === "chiv's blog" ? title : `${title} · chiv`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="site">
+      <nav aria-label="Main navigation">
+        <a href="/">home</a>
+        <a href="/posts">posts</a>
+        <a href="/categories">categories</a>
+        <a href="/about">about</a>
+      </nav>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer>
+        © {new Date().getFullYear()} chiv · built with Astro
+      </footer>
+    </div>
+  </body>
+</html>

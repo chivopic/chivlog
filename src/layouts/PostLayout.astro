@@ -1,0 +1,33 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    date: string | Date;
+    categories?: string[];
+  };
+}
+
+const { frontmatter } = Astro.props;
+const date = new Date(frontmatter.date).toISOString().slice(0, 10);
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  <article>
+    <h1>{frontmatter.title}</h1>
+    <div class="meta">{date}</div>
+    {
+      frontmatter.categories?.length ? (
+        <div class="tags">
+          {frontmatter.categories.map((category) => (
+            <span class="tag">#{category}</span>
+          ))}
+        </div>
+      ) : null
+    }
+    <hr />
+    <slot />
+  </article>
+</BaseLayout>
