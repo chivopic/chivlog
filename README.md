@@ -9,6 +9,10 @@ A deliberately minimal, text-first personal blog built with Astro and Markdown.
 - plain CSS
 - Vercel
 
+## Deployment
+
+Connected to Vercel. Pushes to `main` trigger production deployments automatically.
+
 ## Local development
 
 ```bash
