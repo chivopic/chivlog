@@ -3,6 +3,9 @@ layout: ../../layouts/PostLayout.astro
 title: "Tailscale：把所有设备连成一个私人局域网"
 description: "一个几乎不用折腾配置的 WireGuard 虚拟局域网，适合多设备开发、远程 SSH 和 Home Lab。"
 date: 2026-09-06
+type: tool
+source: https://tailscale.com
+note: "把所有设备拉进一个私人虚拟局域网，很适合多设备开发、远程 SSH 和 Home Lab。"
 categories:
   - inbox
   - tools
