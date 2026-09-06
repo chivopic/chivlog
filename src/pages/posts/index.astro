@@ -16,6 +16,7 @@ const posts = Object.entries(modules)
     ...mod.frontmatter,
     url: path.replace('./', '/posts/').replace(/\.md$/, ''),
   }))
+  .filter((post) => !(post.categories ?? []).includes('inbox'))
   .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 ---
 
