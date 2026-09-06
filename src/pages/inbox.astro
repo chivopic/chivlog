@@ -7,6 +7,9 @@ type PostModule = {
     description?: string;
     date: string | Date;
     categories?: string[];
+    type?: string;
+    source?: string;
+    note?: string;
   };
 };
 
@@ -18,21 +21,57 @@ const items = Object.entries(modules)
   }))
   .filter((post) => (post.categories ?? []).includes('inbox'))
   .sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
+
+const groups = new Map<string, typeof items>();
+for (const item of items) {
+  const date = new Date(item.date).toISOString().slice(0, 10);
+  const group = groups.get(date) ?? [];
+  group.push(item);
+  groups.set(date, group);
+}
+
+const formatDate = (date: string) =>
+  new Intl.DateTimeFormat('en', { month: 'short', day: '2-digit' }).format(new Date(`${date}T00:00:00`));
+
+const sourceLabel = (source?: string) => {
+  if (!source) return null;
+  try {
+    return new URL(source).hostname.replace(/^www\./, '');
+  } catch {
+    return source;
+  }
+};
 ---
 
-<BaseLayout title="inbox" description="Loose notes, links, tools, and ideas worth keeping.">
-  <h1>Inbox</h1>
-  <p class="summary">Loose notes, links, tools, and ideas worth keeping before they become something more finished.</p>
+<BaseLayout title="inbox" description="Small things worth keeping.">
+  <header class="inbox-header">
+    <h1>inbox</h1>
+    <p>small things worth keeping</p>
+  </header>
 
-  <ul class="post-list">
+  <div class="inbox-timeline">
     {
-      items.map((post) => (
-        <li>
-          <div class="meta">{new Date(post.date).toISOString().slice(0, 10)}</div>
-          <a class="post-title" href={post.url}>{post.title}</a>
-          {post.description ? <p class="summary">{post.description}</p> : null}
-        </li>
+      [...groups.entries()].map(([date, entries]) => (
+        <section class="inbox-day">
+          <h2>{formatDate(date)}</h2>
+          <ul class="inbox-stream">
+            {entries.map((item) => (
+              <li class="inbox-item">
+                <div class="inbox-line">
+                  <a class="inbox-title" href={item.url}>{item.title}</a>
+                  <span class="inbox-meta">
+                    {item.type ? <span>{item.type}</span> : null}
+                    {item.source ? (
+                      <a href={item.source} target="_blank" rel="noreferrer">{sourceLabel(item.source)}</a>
+                    ) : null}
+                  </span>
+                </div>
+                <p>{item.note ?? item.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
       ))
     }
-  </ul>
+  </div>
 </BaseLayout>
