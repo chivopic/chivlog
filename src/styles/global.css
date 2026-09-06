@@ -120,6 +120,121 @@ footer {
   color: inherit;
 }
 
+.inbox-header {
+  margin-bottom: 2.6rem;
+}
+
+.inbox-header h1 {
+  margin-bottom: 0.15rem;
+  font-size: 1.35rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 500;
+  text-transform: lowercase;
+}
+
+.inbox-header p {
+  margin: 0;
+  color: #777;
+  font-size: 0.9rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.inbox-day {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 18px;
+  padding: 1.1rem 0;
+  border-top: 1px solid #e8e8e8;
+}
+
+.inbox-day:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.inbox-day h2 {
+  margin: 0.16rem 0 0;
+  color: #888;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.76rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.inbox-stream {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.inbox-stream .inbox-item {
+  margin: 0;
+  padding: 0.72rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.inbox-stream .inbox-item:first-child {
+  padding-top: 0;
+}
+
+.inbox-stream .inbox-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.inbox-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inbox-title {
+  color: #111;
+  text-decoration-color: #aaa;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.inbox-title:visited {
+  color: #444;
+}
+
+.inbox-meta {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.55rem;
+  color: #888;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.inbox-meta span::before,
+.inbox-meta a::before {
+  content: "· ";
+  color: #bbb;
+}
+
+.inbox-meta a,
+.inbox-meta a:visited {
+  color: #888;
+  text-decoration: none;
+}
+
+.inbox-meta a:hover {
+  color: #444;
+  text-decoration: underline;
+}
+
+.inbox-item p {
+  margin: 0.12rem 0 0;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
 article {
   overflow-wrap: anywhere;
 }
@@ -190,5 +305,26 @@ footer a.footer-link:hover {
   nav {
     text-align: left;
     line-height: 1.9;
+  }
+
+  .inbox-day {
+    display: block;
+  }
+
+  .inbox-day h2 {
+    margin-bottom: 0.8rem;
+  }
+
+  .inbox-line {
+    display: block;
+  }
+
+  .inbox-meta {
+    margin-top: 0.12rem;
+  }
+
+  .inbox-meta span:first-child::before,
+  .inbox-meta a:first-child::before {
+    content: "";
   }
 }
